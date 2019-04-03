@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_demos-master" default="compile.module.demos-master">
+  <dirname property="module.demos-master.basedir" file="${ant.file.module_demos-master}"/>
+  
+  <property name="module.jdk.home.demos-master" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.demos-master" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.demos-master" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.demos-master" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="demos-master.output.dir" value="${module.demos-master.basedir}/out/production/demos-master"/>
+  <property name="demos-master.testoutput.dir" value="${module.demos-master.basedir}/out/test/demos-master"/>
+  
+  <path id="demos-master.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="demos-master.module.production.classpath">
+    <path refid="${module.jdk.classpath.demos-master}"/>
+  </path>
+  
+  <path id="demos-master.runtime.production.module.classpath">
+    <pathelement location="${demos-master.output.dir}"/>
+  </path>
+  
+  <path id="demos-master.module.classpath">
+    <path refid="${module.jdk.classpath.demos-master}"/>
+    <pathelement location="${demos-master.output.dir}"/>
+  </path>
+  
+  <path id="demos-master.runtime.module.classpath">
+    <pathelement location="${demos-master.testoutput.dir}"/>
+    <pathelement location="${demos-master.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.demos-master">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.demos-master">
+    <patternset refid="excluded.from.module.demos-master"/>
+  </patternset>
+  
+  
+  <target name="compile.module.demos-master" depends="compile.module.demos-master.production,compile.module.demos-master.tests" description="Compile module demos-master"/>
+  
+  <target name="compile.module.demos-master.production" depends="register.custom.compilers" description="Compile module demos-master; production classes"/>
+  
+  <target name="compile.module.demos-master.tests" depends="register.custom.compilers,compile.module.demos-master.production" description="compile module demos-master; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.demos-master" description="cleanup module">
+    <delete dir="${demos-master.output.dir}"/>
+    <delete dir="${demos-master.testoutput.dir}"/>
+  </target>
+</project>
